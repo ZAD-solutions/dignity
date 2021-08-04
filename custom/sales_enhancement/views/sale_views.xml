@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="ashry_sale_order_tree_inherit" model="ir.ui.view">
+            <field name="name">ashry.sale.order.tree.inherit</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_tree"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="sale_order_type" />
+
+
+                </xpath>
+
+
+            </field>
+        </record>
+
+        <record id="ashry_sale_order_tree_inherit2" model="ir.ui.view">
+            <field name="name">ashry.sale.order.tree.inherit2</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_quotation_tree_with_onboarding"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="sale_order_type"/>
+                </xpath>
+            </field>
+        </record>
+
+
+
+        <record id="ashry_sale_order_form_inherit" model="ir.ui.view">
+            <field name="name">ashry.sale.order.form.inherit</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='partner_shipping_id']" position="after">
+                    <field name="sale_order_type" />
+                    <field name="sale_order_type_id" attrs="{'invisible':[('sale_order_type','!=','other')]}"/>
+                </xpath>
+
+                <xpath expr="//header" position="replace">
+                <header>
+                    <field name="authorized_transaction_ids" invisible="1"/>
+                    <button name="payment_action_capture" type="object"
+                            string="Capture Transaction" class="oe_highlight"
+                            attrs="{'invisible': [('authorized_transaction_ids', '=', [])]}"/>
+                    <button name="payment_action_void" type="object"
+                            string="Void Transaction"
+                            confirm="Are you sure you want to void the authorized transaction? This action can't be undone."
+                            attrs="{'invisible': [('authorized_transaction_ids', '=', [])]}"/>
+                    <button name="%(sale.action_view_sale_advance_payment_inv)d" string="Create Invoice"
+                        type="action" class="btn-primary"
+                        attrs="{'invisible': [('invoice_status', '!=', 'to invoice')]}"/>
+                    <button name="%(sale.action_view_sale_advance_payment_inv)d" string="Create Invoice"
+                        type="action" context="{'default_advance_payment_method': 'percentage'}"
+                        attrs="{'invisible': ['|',('invoice_status', '!=', 'no'), ('state', '!=', 'sale')]}"/>
+
+
+                    <button name="action_quotation_send" string="Send by Email" type="object" states="draft" class="btn-primary"/>
+                    <button name="action_quotation_send" type="object" string="Send PRO-FORMA Invoice"
+                      groups="sale.group_proforma_sales" class="btn-primary"
+                      attrs="{'invisible': ['|', ('state', '!=', 'draft'), ('invoice_count','&gt;=',1)]}" context="{'proforma': True}"/>
+
+                    <button name="send_to_approve" string="Send to Approve" type="object" class="oe_highlight" states="draft,sent"/>
+
+                    <button name="finance_manager_approve" string="Approve and Send to owner" type="object" class="oe_highlight" attrs="{'invisible': ['|', ('state', 'not in', ('finance_manager'))]}" groups="elashry_sales.group_finance_approve_manager"/>
+                    <button name="finance_manager_reject" string="Reject" type="object" class="oe_highlight" attrs="{'invisible': ['|', ('state', 'not in', ('finance_manager'))]}" groups="elashry_sales.group_finance_approve_manager"/>
+
+                    <button name="owner_approve" string="Confirm" type="object" class="oe_highlight" attrs="{'invisible': ['|', ('state', 'not in', ('owner_manager'))]}" groups="elashry_sales.group_owner"/>
+                    <button name="owner_reject" string="Reject" type="object" class="oe_highlight" attrs="{'invisible': ['|', ('state', 'not in', ('owner_manager'))]}" groups="elashry_sales.group_owner"/>
+
+
+                    <button name="action_cancel" states="draft,sent,finance_manager,owner_manager,sale" type="object" string="Cancel"/>
+                    <button name="action_draft" states="cancel" type="object" string="Set to Quotation"/>
+
+
+                    <field name="state" widget="statusbar" statusbar_visible="draft,sent,finance_manager,owner_manager,sale" readonly="1"/>
+                </header>
+
+            </xpath>
+
+            <xpath expr="//notebook" position="inside">
+                    <page name="sale_offer_rules" string=" شروط عروض الاسعار">
+                    <group>
+                        <field name="quotation_rules_prices"/>
+                        <field name="quotation_rules_import"/>
+                        <field name="quotation_rules_meter_price"/>
+                        <field name="quotation_rules_payment"/>
+                        <field name="quotation_rules_period"/>
+                        <field name="quotation_rules_delivery"/>
+                        <field name="quotation_rules_warranty"/>
+                    </group>
+
+                    </page>
+
+
+            </xpath>
+
+                <!--<xpath expr="//field[@name='order_line']/tree/field[@name='product_id']" position="after">-->
+                    <!--<field name="product_standard_price" invisible="1"/>-->
+                <!--</xpath>-->
+
+                <!--<xpath expr="//field[@name='order_line']/tree" position="attributes">-->
+                <!--<attribute name="decoration-danger">price_unit &lt; product_standard_price</attribute>-->
+            <!--</xpath>-->
+
+            </field>
+        </record>
+
+
+    </data>
+</openerp>

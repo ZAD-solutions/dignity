@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="dignity_sale_institutions_form" model="ir.ui.view">
+            <field name="name">dignity.sale.institutions.form</field>
+            <field name="model">institutions</field>
+            <field name="arch" type="xml">
+                <form string="Institutions">
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="toggle_active" type="object" invisible="1"
+                                    class="oe_stat_button" icon="fa-archive">
+                                <field name="active" widget="boolean_button"
+                                       options='{"terminology": "archive"}'/>
+                            </button>
+                        </div>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="dignity_sale_institutions_tree" model="ir.ui.view">
+            <field name="name">dignity.sale.institutions.tree</field>
+            <field name="model">institutions</field>
+            <field name="arch" type="xml">
+                <tree string="Institutions">
+                    <field name="name" string="Name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="dignity_sale_institutions_search" model="ir.ui.view">
+            <field name="name">dignity.sale.institutions.search</field>
+            <field name="model">institutions</field>
+            <field name="arch" type="xml">
+                <search string="Search Institutions">
+                    <field name="name" string="Institutions Name"/>
+                    <filter string="Archived" domain="[('active', '=', False)]" name="archived_institutions"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="dignity_sale_institutions_action" model="ir.actions.act_window">
+            <field name="name">Institutions</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">institutions</field>
+            <field name="view_mode">tree,form</field>
+
+        </record>
+        <menuitem id="dignity_sale_institutions_menu" name="Institutions"
+                  parent="sale.menu_sale_config"
+                  action="dignity_sale_institutions_action" sequence="13"/>
+
+
+    </data>
+</odoo>
