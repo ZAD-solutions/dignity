@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <record id="chronic_diseases_1" model="chronic.diseases">
+            <field name="name">Diabetes</field>
+        </record>
+         <record id="chronic_diseases_2" model="chronic.diseases">
+            <field name="name">Hypertension</field>
+        </record>
+         <record id="chronic_diseases_3" model="chronic.diseases">
+            <field name="name">Neurological</field>
+        </record>
+
+        <record id="social_media_1" model="social.media">
+            <field name="name">Facebook</field>
+        </record>
+         <record id="social_media_2" model="social.media">
+            <field name="name">Twitter</field>
+        </record>
+        <record id="social_media_3" model="social.media">
+            <field name="name">Instagram</field>
+        </record>
+    </data>
+</odoo>

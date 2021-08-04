@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="dignity_view_partner_form_inherit" model="ir.ui.view">
+        <field name="name">dignity.res.partner.form.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page name="personal_info" string="Personal Info">
+                    <group name="general_section" string="General Section">
+                        <group>
+                            <field name="gender" widget="selection"/>
+                            <field name="age_group_id"/>
+                            <field name="birthdate"/>
+                            <field name="age" attrs="{'invisible': [('birthdate', '=', False)]}"/>
+                        </group>
+                        <group>
+                            <field name="marital_status"/>
+                            <field name="children_no"
+                                   attrs="{'invisible': [('marital_status', 'not in', ('married', 'divorced', 'separated'))]}"/>
+                            <field name="household_income"/>
+                        </group>
+                        <field name="degree_ids">
+                            <tree editable="bottom">
+                                <field name="degree_id"/>
+                                <field name="date"/>
+                                <field name="institutions_id"/>
+                            </tree>
+                        </field>
+                    </group>
+                    <group name="more_info_section" string="More Info Section">
+                        <group>
+                            <field name="is_gezira_member" widget="radio"/>
+                            <field name="is_heliopolis_member" widget="radio"/>
+                            <field name="favourite_pastime"/>
+                        </group>
+                        <group string="How Did you discover Qwell">
+                            <field name="campaign_id"/>
+                            <field name="source_id"/>
+                            <field name="medium_id"/>
+                            <field name="referred"/>
+                        </group>
+                        <group>
+                            <field name="need_assist" widget="radio"/>
+                            <field name="socialize_member" widget="radio"/>
+                        </group>
+                    </group>
+                </page>
+                <page name="nutrition_info" string="Nutrition Info">
+                    <group>
+                        <group>
+                            <field name="on_diet" widget="radio"/>
+                            <field name="diet_type"
+                                   attrs="{'invisible': [('on_diet', '!=', 'yes')], 'required': [('on_diet', '=', 'yes')]}"/>
+                            <field name="any_restrictions" widget="radio"/>
+                            <field name="more_info"
+                                   attrs="{'invisible': [('any_restrictions', '!=', 'yes')], 'required': [('any_restrictions', '=', 'yes')]}"/>
+                            <field name="fruits_or_sweets" widget="radio"/>
+                            <field name="weight_goals"/>
+                            <field name="homemade_or_fast_food" widget="radio"/>
+                            <field name="meals_per_day"/>
+                            <field name="salty_or_non_salty" class="oe_inline" widget="radio"/>
+                        </group>
+                        <group>
+                            <label for="water_per_day"/>
+                            <div class="o_row">
+                                <field name="water_per_day" class="oe_inline"/>
+                                <span class="oe_grey p-2">Liter/Day</span>
+                            </div>
+                            <field name="drinking_alcohol" widget="radio"/>
+                            <field name="favourite_breakfast"/>
+                            <field name="favourite_lunch"/>
+                            <field name="favourite_dinner"/>
+                            <field name="favourite_source_of_protein"/>
+                            <field name="vitamin_d" widget="radio"/>
+                            <field name="time_in_sun" widget="radio"/>
+                            <field name="healthy_level"/>
+                            <field name="missing_from_diet"/>
+                        </group>
+                    </group>
+                </page>
+                <page name="medical_info" string="Medical Info">
+                    <group>
+                        <group>
+                            <field name="chronic_diseases" widget="radio"/>
+                            <field name="chronic_diseases_ids" widget="many2many_tags" options="{'no_create': True}"
+                                   attrs="{'invisible': [('chronic_diseases', '!=', 'yes')]}"/>
+                            <field name="medication"/>
+                            <field name="injuries" widget="radio"/>
+                            <field name="serious_or_permanent_injuries"
+                                   attrs="{'invisible': [('injuries', '!=', 'yes')]}"/>
+                        </group>
+                        <group>
+                            <field name="activity_level"/>
+                            <field name="disabilities_or_handicaps" widget="radio"/>
+                            <field name="disability_type_ids" widget="many2many_tags"
+                                   attrs="{'invisible': [('disabilities_or_handicaps', '!=', 'yes')]}"/>
+                            <field name="any_past_emotional_trauma" widget="radio"/>
+                            <field name="emotional_trauma"
+                                   attrs="{'invisible': [('any_past_emotional_trauma', '!=', 'yes')]}"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="medical_issues" widget="radio"/>
+                        <field name="medical_issues_ids" attrs="{'invisible': [('medical_issues', '!=', 'yes')]}">
+                            <tree editable="bottom">
+                                <field name="type"/>
+                                <field name="date"/>
+                                <field name="more_info"/>
+                            </tree>
+                        </field>
+                    </group>
+                </page>
+                <page name="entertainment_travel_info" string="Entertainment/Travel Info">
+                    <group name="entertainment_info" string="Entertainment Info">
+                        <group>
+                            <field name="favourite_actor"/>
+                            <field name="favourite_actress"/>
+                            <field name="favourite_egyptian_movie"/>
+                            <field name="favourite_tv_show"/>
+                            <field name="favourite_international_movie"/>
+                            <field name="favourite_musician"/>
+                            <field name="favourite_board_game"/>
+                        </group>
+                        <group>
+                            <field name="do_you_read" widget="radio"/>
+                            <field name="favourite_book" attrs="{'invisible': [('do_you_read', '!=', 'yes')]}"/>
+                            <field name="favourite_writer" attrs="{'invisible': [('do_you_read', '!=', 'yes')]}"/>
+                            <field name="do_you_play_music" widget="radio"/>
+                            <field name="do_you_play_sports" widget="radio"/>
+                            <field name="team_type" widget="radio"/>
+                        </group>
+                    </group>
+                    <group name="travel_info" string="Travel Info">
+                        <group>
+                            <field name="preferred_holidays" widget="radio"/>
+                            <field name="preferred_destination" widget="many2many_tags"
+                                   attrs="{'invisible': [('preferred_holidays', '!=', 'traveling')]}"/>
+                            <field name="other_destination"
+                                   attrs="{'invisible': [('preferred_destination', '!=', 'other')]}"/>
+                        </group>
+                        <group>
+                            <field name="own_or_rent" widget="radio"/>
+                            <field name="summer_or_winter" widget="radio"/>
+                            <field name="remote_destination" widget="radio"/>
+                            <field name="go_out_cairo"/>
+                        </group>
+                    </group>
+                    <group name="transportation_info" string="Transportation Info">
+                        <group>
+                            <field name="own_car" widget="radio"/>
+                            <field name="do_you_drive" widget="radio"
+                                   attrs="{'invisible': [('own_car', '!=', 'yes')]}"/>
+                            <field name="do_you_have_driver" widget="radio"
+                                   attrs="{'invisible': [('do_you_drive', '!=', 'no')]}"/>
+                            <field name="driver_type" widget="radio"
+                                   attrs="{'invisible': [('do_you_have_driver', '!=', 'yes')]}"/>
+                            <field name="uber_or_family" widget="radio"
+                                   attrs="{'invisible': [('own_car', '!=', 'no')]}"/>
+                        </group>
+                    </group>
+                </page>
+                <page name="interaction_behavioral_date" string="Interaction/Behavioral Data">
+                    <group>
+                        <field name="use_subscription" widget="radio"/>
+                         <field name="subscription_date"
+                                   attrs="{'invisible': [('use_subscription', '!=', 'yes')]}"/>
+                        <field name="discontinued" widget="radio"
+                                   attrs="{'invisible': [('use_subscription', '!=', 'no')]}"/>
+                        <field name="discontinued_reason_ids" widget="many2many_tags"
+                                   attrs="{'invisible': [('discontinued', '!=', 'yes')], 'required': [('discontinued', '=', 'yes')]}"/>
+                        <field name="social_follower" widget="radio"/>
+                        <field name="recommended_products_and_services"/>
+                    </group>
+                </page>
+            </xpath>
+
+            <xpath expr='//field[@name="child_ids"]//form//field[@name="mobile"]' position="after">
+                <field name="is_parent"/>
+                <field name="is_child"/>
+                <field name="is_main_contact"/>
+            </xpath>
+
+            <xpath expr="//field[@name='category_id']" position="after">
+                <field name="main_contact" attrs="{'invisible': [('main_contact', '=', False)]}"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
