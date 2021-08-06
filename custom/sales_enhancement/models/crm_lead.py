@@ -319,4 +319,4 @@ class CRMLeadInherit(models.Model):
     #             lead.show_enrich_button = False
     #         else:
     #             lead.show_enrich_button = True
-    #
+
