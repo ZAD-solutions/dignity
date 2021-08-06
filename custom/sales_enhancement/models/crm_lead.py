@@ -267,6 +267,7 @@ class CRMLeadInherit(models.Model):
             contact_name = Partner._parse_partner_name(self.email_from)[0] if self.email_from else False
 
         if self.partner_name:
+            print('1111111111111111111')
             partner_company = Partner.create(self._prepare_customer_values(self.partner_name, is_company=True))
             # Prepare one2many fields
             degree_lines = []
@@ -294,6 +295,7 @@ class CRMLeadInherit(models.Model):
             partner_company = None
 
         if contact_name:
+            print('222222222222222222')
             new_partner = Partner.create(self._prepare_customer_values(contact_name, is_company=False,
                                                          parent_id=partner_company.id if partner_company else False))
             # Prepare one2many fields
@@ -320,7 +322,28 @@ class CRMLeadInherit(models.Model):
 
         if partner_company:
             return partner_company
-        return Partner.create(self._prepare_customer_values(self.name, is_company=False))
+        new_partner_id = Partner.create(self._prepare_customer_values(self.name, is_company=False))
+        # Prepare one2many fields
+        degree_lines = []
+        medical_issues = []
+        for line in self.degree_ids:
+            degree_lines.append({
+                'degree_id': line.degree_id.id,
+                'institutions_id': line.institutions_id.id,
+                'date': line.date,
+                'partner_id': new_partner_id.id,
+            })
+        for line in self.medical_issues_ids:
+            medical_issues.append({
+                'type': line.type,
+                'date': line.date,
+                'more_info': line.more_info,
+                'partner_id': new_partner_id.id,
+            })
+        new_partner_id.write({'degree_ids': [(0, 0, line) for line in degree_lines]})
+        new_partner_id.write({'medical_issues_ids': [(0, 0, line) for line in medical_issues]})
+        # END
+        return new_partner_id
 
     # def handle_partner_assignation(self, action='create', partner_id=False):
     #     """ Handle partner assignation during a lead conversion.
