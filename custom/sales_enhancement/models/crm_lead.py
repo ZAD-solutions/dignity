@@ -173,8 +173,8 @@ class CRMLeadInherit(models.Model):
                 if self.mobile and not re.match("^\d{11}$", self.mobile):
                     raise UserError('Please enter 11 digits for the mobile number (%s).' % self.mobile)
 
-    def _create_lead_partner_data(self, name, is_company, parent_id=False):
-        res = super(CRMLeadInherit, self)._create_lead_partner_data(name, is_company, parent_id=False)
+    def _prepare_customer_values(self, partner_name, is_company=False, parent_id=False):
+        res = super(CRMLeadInherit, self)._prepare_customer_values(partner_name, is_company=False, parent_id=False)
         res['gender'] = self.gender
         res['age_group_id'] = self.age_group_id.id
         res['birthdate'] = self.birthdate
@@ -256,50 +256,116 @@ class CRMLeadInherit(models.Model):
         res['recommended_products_and_services'] = self.recommended_products_and_services
         return res
 
-    def handle_partner_assignation(self, action='create', partner_id=False):
-        """ Handle partner assignation during a lead conversion.
-            if action is 'create', create new partner with contact and assign lead to new partner_id.
-            otherwise assign lead to the specified partner_id
+    def _create_customer(self):
+        """ Create a partner from lead data and link it to the lead.
 
-            :param list ids: leads/opportunities ids to process
-            :param string action: what has to be done regarding partners (create it, assign an existing one, or nothing)
-            :param int partner_id: partner to assign if any
-            :return dict: dictionary organized as followed: {lead_id: partner_assigned_id}
+        :return: newly-created partner browse record
         """
-        partner_ids = {}
-        for lead in self:
-            if partner_id:
-                lead.partner_id = partner_id
-            if lead.partner_id:
-                partner_ids[lead.id] = lead.partner_id.id
-                continue
-            if action == 'create':
-                partner = lead._create_lead_partner()
-                partner_id = partner.id
+        Partner = self.env['res.partner']
+        contact_name = self.contact_name
+        if not contact_name:
+            contact_name = Partner._parse_partner_name(self.email_from)[0] if self.email_from else False
 
-                # Prepare one2many fields
-                degree_lines = []
-                medical_issues = []
-                for line in self.degree_ids:
-                    degree_lines.append({
-                        'degree_id': line.degree_id.id,
-                        'institutions_id': line.institutions_id.id,
-                        'date': line.date,
-                        'partner_id': partner.id,
-                    })
-                for line in self.medical_issues_ids:
-                    medical_issues.append({
-                        'type': line.type,
-                        'date': line.date,
-                        'more_info': line.more_info,
-                        'partner_id': partner.id,
-                    })
-                partner.write({'degree_ids': [(0, 0, line) for line in degree_lines]})
-                partner.write({'medical_issues_ids': [(0, 0, line) for line in medical_issues]})
-                # END
-                partner.team_id = lead.team_id
-            partner_ids[lead.id] = partner_id
-        return partner_ids
+        if self.partner_name:
+            partner_company = Partner.create(self._prepare_customer_values(self.partner_name, is_company=True))
+            # Prepare one2many fields
+            degree_lines = []
+            medical_issues = []
+            for line in self.degree_ids:
+                degree_lines.append({
+                    'degree_id': line.degree_id.id,
+                    'institutions_id': line.institutions_id.id,
+                    'date': line.date,
+                    'partner_id': partner_company.id,
+                })
+            for line in self.medical_issues_ids:
+                medical_issues.append({
+                    'type': line.type,
+                    'date': line.date,
+                    'more_info': line.more_info,
+                    'partner_id': partner_company.id,
+                })
+            partner_company.write({'degree_ids': [(0, 0, line) for line in degree_lines]})
+            partner_company.write({'medical_issues_ids': [(0, 0, line) for line in medical_issues]})
+            # END
+        elif self.partner_id:
+            partner_company = self.partner_id
+        else:
+            partner_company = None
+
+        if contact_name:
+            new_partner = Partner.create(self._prepare_customer_values(contact_name, is_company=False,
+                                                         parent_id=partner_company.id if partner_company else False))
+            # Prepare one2many fields
+            degree_lines = []
+            medical_issues = []
+            for line in self.degree_ids:
+                degree_lines.append({
+                    'degree_id': line.degree_id.id,
+                    'institutions_id': line.institutions_id.id,
+                    'date': line.date,
+                    'partner_id': new_partner.id,
+                })
+            for line in self.medical_issues_ids:
+                medical_issues.append({
+                    'type': line.type,
+                    'date': line.date,
+                    'more_info': line.more_info,
+                    'partner_id': new_partner.id,
+                })
+            new_partner.write({'degree_ids': [(0, 0, line) for line in degree_lines]})
+            new_partner.write({'medical_issues_ids': [(0, 0, line) for line in medical_issues]})
+            # END
+            return new_partner
+
+        if partner_company:
+            return partner_company
+        return Partner.create(self._prepare_customer_values(self.name, is_company=False))
+
+    # def handle_partner_assignation(self, action='create', partner_id=False):
+    #     """ Handle partner assignation during a lead conversion.
+    #         if action is 'create', create new partner with contact and assign lead to new partner_id.
+    #         otherwise assign lead to the specified partner_id
+    #
+    #         :param list ids: leads/opportunities ids to process
+    #         :param string action: what has to be done regarding partners (create it, assign an existing one, or nothing)
+    #         :param int partner_id: partner to assign if any
+    #         :return dict: dictionary organized as followed: {lead_id: partner_assigned_id}
+    #     """
+    #     partner_ids = {}
+    #     for lead in self:
+    #         if partner_id:
+    #             lead.partner_id = partner_id
+    #         if lead.partner_id:
+    #             partner_ids[lead.id] = lead.partner_id.id
+    #             continue
+    #         if action == 'create':
+    #             partner = lead._create_lead_partner()
+    #             partner_id = partner.id
+    #
+    #             # Prepare one2many fields
+    #             degree_lines = []
+    #             medical_issues = []
+    #             for line in self.degree_ids:
+    #                 degree_lines.append({
+    #                     'degree_id': line.degree_id.id,
+    #                     'institutions_id': line.institutions_id.id,
+    #                     'date': line.date,
+    #                     'partner_id': partner.id,
+    #                 })
+    #             for line in self.medical_issues_ids:
+    #                 medical_issues.append({
+    #                     'type': line.type,
+    #                     'date': line.date,
+    #                     'more_info': line.more_info,
+    #                     'partner_id': partner.id,
+    #                 })
+    #             partner.write({'degree_ids': [(0, 0, line) for line in degree_lines]})
+    #             partner.write({'medical_issues_ids': [(0, 0, line) for line in medical_issues]})
+    #             # END
+    #             partner.team_id = lead.team_id
+    #         partner_ids[lead.id] = partner_id
+    #     return partner_ids
 
     # Override these fields to ignore server core addons versions conflicts
     # reveal_id = fields.Char(string='Reveal ID', index=True)

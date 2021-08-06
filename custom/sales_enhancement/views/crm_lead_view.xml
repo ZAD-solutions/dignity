@@ -18,7 +18,8 @@
                             <field name="marital_status"/>
                             <field name="children_no"
                                    attrs="{'invisible': [('marital_status', 'not in', ('married', 'divorced', 'separated'))]}"/>
-                            <field name="household_income"/>
+                            <field name="currency_id" invisible="1"/>
+                            <field name="household_income" widget='monetary'/>
                         </group>
                         <field name="degree_ids">
                             <tree editable="bottom">
