@@ -190,4 +190,4 @@ class ResPartnerInherit(models.Model):
                     raise UserError('Please enter 11 digits for the mobile number (%s).' % self.mobile)
 
     # Override these fields to ignore server core addons versions conflicts
-    # stage_id = fields.Many2one(comodel_name='crm.stage')
+    stage_id = fields.Many2one(comodel_name='crm.stage')
