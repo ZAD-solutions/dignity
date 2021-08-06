@@ -188,3 +188,6 @@ class ResPartnerInherit(models.Model):
             if self.country_id.id == 65:
                 if self.mobile and not re.match("^\d{11}$", self.mobile):
                     raise UserError('Please enter 11 digits for the mobile number (%s).' % self.mobile)
+
+    # Override these fields to ignore server core addons versions conflicts
+    stage_id = fields.Many2one(comodel_name='crm.stage')

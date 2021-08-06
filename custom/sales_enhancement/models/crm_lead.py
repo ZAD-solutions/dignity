@@ -3,6 +3,7 @@ from odoo import models, fields, api, _
 from odoo.exceptions import UserError
 import re
 from dateutil.relativedelta import relativedelta
+
 NUMBER_SELECTIONS = [('1', '1'),
                      ('2', '2'),
                      ('3', '3'),
@@ -17,7 +18,7 @@ FIVE_SELECTIONS = [('1', '1'),
                    ('2', '2'),
                    ('3', '3'),
                    ('4', '4'),
-                   ('5', '5'),]
+                   ('5', '5'), ]
 
 
 class CRMLeadInherit(models.Model):
@@ -27,13 +28,13 @@ class CRMLeadInherit(models.Model):
     age_group_id = fields.Many2one(comodel_name='age.groups', required='True', string='Age Group',
                                    track_visibility='onchange', )
     birthdate = fields.Date('Birth Date', )
-    age = fields.Char(compute="get_partner_age", string='Age', store=True,)
+    age = fields.Char(compute="get_partner_age", string='Age', store=True, )
     marital_status = fields.Selection([('single', 'Single'),
                                        ('married', 'Married'),
                                        ('divorced', 'Divorced'),
                                        ('separated', 'Separated'),
                                        ], string='Marital Status', )
-    children_no = fields.Integer(string='No. of Children',)
+    children_no = fields.Integer(string='No. of Children', )
     currency_id = fields.Many2one('res.currency', string='Currency',
                                   default=lambda self: self.env.company.currency_id)
     household_income = fields.Monetary(string='Household Income', currency_field="currency_id", )
@@ -158,7 +159,7 @@ class CRMLeadInherit(models.Model):
                 end_data = fields.Datetime.now()
                 delta = relativedelta(end_data, rec.birthdate)
                 age = str(delta.years) + _(" Year ") + str(delta.months) + _(" Month ") + str(delta.days) + _(
-                        " Days")
+                    " Days")
             rec.age = age
 
     @api.constrains('mobile')
@@ -299,3 +300,22 @@ class CRMLeadInherit(models.Model):
                 partner.team_id = lead.team_id
             partner_ids[lead.id] = partner_id
         return partner_ids
+
+    # Override these fields to ignore server core addons versions conflicts
+    reveal_id = fields.Char(string='Reveal ID', index=True)
+    iap_enrich_done = fields.Boolean(string='Enrichment done',
+                                     help='Whether IAP service for lead enrichment based on email has been performed on this lead.')
+    show_enrich_button = fields.Boolean(string='Allow manual enrich', compute="_compute_show_enrich_button")
+
+    @api.depends('email_from', 'probability', 'iap_enrich_done', 'reveal_id')
+    def _compute_show_enrich_button(self):
+        config = self.env['ir.config_parameter'].sudo().get_param('crm.iap.lead.enrich.setting', 'manual')
+        if not config or config != 'manual':
+            self.show_enrich_button = False
+            return
+        for lead in self:
+            if not lead.active or not lead.email_from or lead.iap_enrich_done or lead.reveal_id or lead.probability == 100:
+                lead.show_enrich_button = False
+            else:
+                lead.show_enrich_button = True
+
