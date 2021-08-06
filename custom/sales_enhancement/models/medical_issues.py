@@ -13,4 +13,5 @@ class MedicalIssues(models.Model):
     date = fields.Date()
     more_info = fields.Char()
     partner_id = fields.Many2one('res.partner')
+    lead_id = fields.Many2one('crm.lead')
 

@@ -17,7 +17,11 @@ access_age_groups_user,age_groups_user,model_age_groups,sales_team.group_sale_sa
 access_res_partner_degree_manager,res_partner_degree_manager,model_res_partner_degree,sales_team.group_sale_manager,1,1,1,1
 access_res_partner_degree_user,res_partner_degree_user,model_res_partner_degree,sales_team.group_sale_salesman,1,0,0,0
 
+access_pastime_manager,pastime_manager,model_pastime,sales_team.group_sale_manager,1,1,1,1
+access_pastime_user,pastime_user,model_pastime,sales_team.group_sale_salesman,1,0,0,0
+
 access_chronic_diseases,chronic_diseases,model_chronic_diseases,base.group_user,1,1,1,1
 access_medical_issues,medical_issues,model_medical_issues,base.group_user,1,1,1,1
 access_social_media,social_media,model_social_media,base.group_user,1,1,1,1
+access_preferred_destination,preferred_destination,model_preferred_destination,base.group_user,1,1,1,1
 
