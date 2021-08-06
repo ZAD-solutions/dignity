@@ -88,7 +88,7 @@ class CRMLeadInherit(models.Model):
     medication = fields.Char('What Medication are you on ?', )
     medical_issues = fields.Selection([('yes', 'Yes'), ('no', 'No')],
                                       string='Any medical Issues/Allergies/Surgeries', )
-    medical_issues_ids = fields.One2many(comodel_name='medical.issues', inverse_name='partner_id', )
+    medical_issues_ids = fields.One2many(comodel_name='medical.issues', inverse_name='lead_id', )
     injuries = fields.Selection([('yes', 'Yes'), ('no', 'No')],
                                 string='Any serious or permanent Injuries', )
     serious_or_permanent_injuries = fields.Char('Injuries', )
@@ -302,21 +302,21 @@ class CRMLeadInherit(models.Model):
         return partner_ids
 
     # Override these fields to ignore server core addons versions conflicts
-    reveal_id = fields.Char(string='Reveal ID', index=True)
-    iap_enrich_done = fields.Boolean(string='Enrichment done',
-                                     help='Whether IAP service for lead enrichment based on email has been performed on this lead.')
-    show_enrich_button = fields.Boolean(string='Allow manual enrich', compute="_compute_show_enrich_button")
-    ribbon_message = fields.Char()
-    
-    @api.depends('email_from', 'probability', 'iap_enrich_done', 'reveal_id')
-    def _compute_show_enrich_button(self):
-        config = self.env['ir.config_parameter'].sudo().get_param('crm.iap.lead.enrich.setting', 'manual')
-        if not config or config != 'manual':
-            self.show_enrich_button = False
-            return
-        for lead in self:
-            if not lead.active or not lead.email_from or lead.iap_enrich_done or lead.reveal_id or lead.probability == 100:
-                lead.show_enrich_button = False
-            else:
-                lead.show_enrich_button = True
-
+    # reveal_id = fields.Char(string='Reveal ID', index=True)
+    # iap_enrich_done = fields.Boolean(string='Enrichment done',
+    #                                  help='Whether IAP service for lead enrichment based on email has been performed on this lead.')
+    # show_enrich_button = fields.Boolean(string='Allow manual enrich', compute="_compute_show_enrich_button")
+    # ribbon_message = fields.Char()
+    #
+    # @api.depends('email_from', 'probability', 'iap_enrich_done', 'reveal_id')
+    # def _compute_show_enrich_button(self):
+    #     config = self.env['ir.config_parameter'].sudo().get_param('crm.iap.lead.enrich.setting', 'manual')
+    #     if not config or config != 'manual':
+    #         self.show_enrich_button = False
+    #         return
+    #     for lead in self:
+    #         if not lead.active or not lead.email_from or lead.iap_enrich_done or lead.reveal_id or lead.probability == 100:
+    #             lead.show_enrich_button = False
+    #         else:
+    #             lead.show_enrich_button = True
+    #
