@@ -306,7 +306,8 @@ class CRMLeadInherit(models.Model):
     iap_enrich_done = fields.Boolean(string='Enrichment done',
                                      help='Whether IAP service for lead enrichment based on email has been performed on this lead.')
     show_enrich_button = fields.Boolean(string='Allow manual enrich', compute="_compute_show_enrich_button")
-
+    ribbon_message = fields.Char()
+    
     @api.depends('email_from', 'probability', 'iap_enrich_done', 'reveal_id')
     def _compute_show_enrich_button(self):
         config = self.env['ir.config_parameter'].sudo().get_param('crm.iap.lead.enrich.setting', 'manual')
