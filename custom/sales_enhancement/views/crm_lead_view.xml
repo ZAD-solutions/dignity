@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <record id="dignity_view_partner_form_inherit" model="ir.ui.view">
-        <field name="name">dignity.res.partner.form.inherit</field>
-        <field name="model">res.partner</field>
-        <field name="inherit_id" ref="base.view_partner_form"/>
+    <record id="dignity_view_lead_form_inherit" model="ir.ui.view">
+        <field name="name">dignity.crm.lead.form.inherit</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_lead_view_form"/>
         <field name="arch" type="xml">
             <xpath expr="//notebook" position="inside">
                 <page name="personal_info" string="Personal Info">
@@ -33,12 +33,6 @@
                             <field name="is_gezira_member" widget="radio"/>
                             <field name="is_heliopolis_member" widget="radio"/>
                             <field name="favourite_pastime_ids" widget="many2many_tags"/>
-                        </group>
-                        <group string="How Did you discover Qwell">
-                            <field name="campaign_id"/>
-                            <field name="source_id"/>
-                            <field name="medium_id"/>
-                            <field name="referred"/>
                         </group>
                         <group>
                             <field name="need_assist" widget="radio"/>
@@ -175,39 +169,6 @@
                     </group>
                 </page>
             </xpath>
-
-            <xpath expr='//field[@name="child_ids"]//form//field[@name="mobile"]' position="after">
-                <field name="is_parent"/>
-                <field name="is_child"/>
-                <field name="is_main_contact"/>
-            </xpath>
-
-            <xpath expr='//field[@name="child_ids"]//kanban//field[@name="display_name"]' position="after">
-                <field name="is_main_contact"/>
-            </xpath>
-            <xpath expr='//field[@name="child_ids"]//kanban//div[@class="oe_kanban_details"]' position="inside">
-                <div class="row" t-if="record.is_main_contact.raw_value">
-                    <div class="col-6">
-                        <strong>Main Contact</strong>
-                    </div>
-                    <div class="col-6">
-                        <strong>
-                            <ul>
-                                <li class="text-success float-right mb4" t-if="record.is_main_contact.raw_value">
-                                    <i class="fa fa-circle" role="img" aria-label="Main Contact"
-                                       title="Main Contact"></i>
-                                </li>
-                            </ul>
-                        </strong>
-                    </div>
-                </div>
-
-            </xpath>
-
-<!--            <xpath expr="//field[@name='category_id']" position="after">-->
-<!--                <field name="main_contact"-->
-<!--                       attrs="{'invisible': ['|', ('main_contact', '=', False), ('child_ids', '=', [])]}"/>-->
-<!--            </xpath>-->
         </field>
     </record>
 </odoo>

@@ -12,3 +12,4 @@ class ResPartnerDegree(models.Model):
     institutions_id = fields.Many2one('institutions', required=True, )
     date = fields.Date()
     partner_id = fields.Many2one('res.partner', )
+    lead_id = fields.Many2one('crm.lead',)

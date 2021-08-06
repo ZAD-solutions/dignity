@@ -20,8 +20,8 @@ FIVE_SELECTIONS = [('1', '1'),
                    ('5', '5'),]
 
 
-class ResPartnerInherit(models.Model):
-    _inherit = 'res.partner'
+class CRMLeadInherit(models.Model):
+    _inherit = 'crm.lead'
 
     gender = fields.Selection([('male', 'Male'), ('female', 'Female')], string='Gender', required=True, )
     age_group_id = fields.Many2one(comodel_name='age.groups', required='True', string='Age Group',
@@ -37,17 +37,13 @@ class ResPartnerInherit(models.Model):
     currency_id = fields.Many2one('res.currency', string='Currency',
                                   default=lambda self: self.env.company.currency_id)
     household_income = fields.Monetary(string='Household Income', currency_field="currency_id", )
-    degree_ids = fields.One2many(comodel_name='res.partner.degree', inverse_name='partner_id', )
+    degree_ids = fields.One2many(comodel_name='res.partner.degree', inverse_name='lead_id', )
     is_gezira_member = fields.Selection([('yes', 'Yes'), ('no', 'No')],
                                         string='Are you a Member Of Gezira Club ?', )
     is_heliopolis_member = fields.Selection([('yes', 'Yes'), ('no', 'No')],
                                             string='Are you a Member Of Heliopolis Club ?', )
     favourite_pastime = fields.Char(string='Favourite Pastime')
     favourite_pastime_ids = fields.Many2many(comodel_name='pastime', string='Favourite Pastime')
-    campaign_id = fields.Many2one('utm.campaign', 'Campaign',)
-    source_id = fields.Many2one('utm.source', 'Source',)
-    medium_id = fields.Many2one('utm.medium', 'Medium',)
-    referred = fields.Char('Referred By')
     need_assist = fields.Selection([('yes', 'Yes'), ('no', 'No')],
                                    string='Would you like Our Team to stay nearby to physically assist you ?', )
     socialize_member = fields.Selection([('yes', 'Yes'), ('no', 'No')],
@@ -153,19 +149,6 @@ class ResPartnerInherit(models.Model):
     recommended_products_and_services = fields.Selection(NUMBER_SELECTIONS,
                                                          string='How likely to recommend our products & services to '
                                                                 'others')
-    is_parent = fields.Boolean()
-    is_child = fields.Boolean()
-    is_main_contact = fields.Boolean()
-    main_contact = fields.Char(compute='_get_main_contact')
-
-    def _get_main_contact(self):
-        for partner in self:
-            contact = ''
-            if partner.child_ids:
-                for child in partner.child_ids:
-                    if child.is_main_contact:
-                        contact = child.name
-            partner.main_contact = contact
 
     @api.depends('birthdate')
     def get_partner_age(self):
@@ -188,3 +171,131 @@ class ResPartnerInherit(models.Model):
             if self.country_id.id == 65:
                 if self.mobile and not re.match("^\d{11}$", self.mobile):
                     raise UserError('Please enter 11 digits for the mobile number (%s).' % self.mobile)
+
+    def _create_lead_partner_data(self, name, is_company, parent_id=False):
+        res = super(CRMLeadInherit, self)._create_lead_partner_data(name, is_company, parent_id=False)
+        res['gender'] = self.gender
+        res['age_group_id'] = self.age_group_id.id
+        res['birthdate'] = self.birthdate
+        res['age'] = self.age
+        res['marital_status'] = self.marital_status
+        res['children_no'] = self.children_no
+        res['currency_id'] = self.currency_id
+        res['household_income'] = self.household_income
+        res['is_gezira_member'] = self.is_gezira_member
+        res['is_heliopolis_member'] = self.is_heliopolis_member
+        res['favourite_pastime'] = self.favourite_pastime
+        res['favourite_pastime_ids'] = self.favourite_pastime_ids.ids
+        res['campaign_id'] = self.campaign_id.id
+        res['source_id'] = self.source_id.id
+        res['medium_id'] = self.medium_id.id
+        res['referred'] = self.referred
+        res['need_assist'] = self.need_assist
+        res['socialize_member'] = self.socialize_member
+        res['on_diet'] = self.on_diet
+        res['diet_type'] = self.diet_type
+        res['any_restrictions'] = self.any_restrictions
+        res['more_info'] = self.more_info
+        res['fruits_or_sweets'] = self.fruits_or_sweets
+        res['weight_goals'] = self.weight_goals
+        res['homemade_or_fast_food'] = self.homemade_or_fast_food
+        res['meals_per_day'] = self.meals_per_day
+        res['salty_or_non_salty'] = self.salty_or_non_salty
+        res['water_per_day'] = self.water_per_day
+        res['drinking_alcohol'] = self.drinking_alcohol
+        res['favourite_breakfast'] = self.favourite_breakfast
+        res['favourite_lunch'] = self.favourite_lunch
+        res['favourite_dinner'] = self.favourite_dinner
+        res['favourite_source_of_protein'] = self.favourite_source_of_protein
+        res['vitamin_d'] = self.vitamin_d
+        res['time_in_sun'] = self.time_in_sun
+        res['healthy_level'] = self.healthy_level
+        res['missing_from_diet'] = self.missing_from_diet
+        res['chronic_diseases'] = self.chronic_diseases
+        res['chronic_diseases_ids'] = self.chronic_diseases_ids.ids
+        res['medication'] = self.medication
+        res['medical_issues'] = self.medical_issues
+        res['injuries'] = self.injuries
+        res['serious_or_permanent_injuries'] = self.serious_or_permanent_injuries
+        res['activity_level'] = self.activity_level
+        res['disabilities_or_handicaps'] = self.disabilities_or_handicaps
+        res['disability_type_ids'] = self.disability_type_ids.ids
+        res['any_past_emotional_trauma'] = self.any_past_emotional_trauma
+        res['emotional_trauma'] = self.emotional_trauma
+        res['favourite_actor'] = self.favourite_actor
+        res['favourite_actress'] = self.favourite_actress
+        res['favourite_egyptian_movie'] = self.favourite_egyptian_movie
+        res['favourite_tv_show'] = self.favourite_tv_show
+        res['favourite_international_movie'] = self.favourite_international_movie
+        res['favourite_musician'] = self.favourite_musician
+        res['do_you_read'] = self.do_you_read
+        res['favourite_book'] = self.favourite_book
+        res['favourite_writer'] = self.favourite_writer
+        res['do_you_play_music'] = self.do_you_play_music
+        res['do_you_play_sports'] = self.do_you_play_sports
+        res['favourite_board_game'] = self.favourite_board_game
+        res['team_type'] = self.team_type
+        res['preferred_holidays'] = self.preferred_holidays
+        res['preferred_destination'] = self.preferred_destination.ids
+        res['other_destination'] = self.other_destination
+        res['own_or_rent'] = self.own_or_rent
+        res['summer_or_winter'] = self.summer_or_winter
+        res['remote_destination'] = self.remote_destination
+        res['go_out_cairo'] = self.go_out_cairo
+        res['own_car'] = self.own_car
+        res['do_you_drive'] = self.do_you_drive
+        res['do_you_have_driver'] = self.do_you_have_driver
+        res['uber_or_family'] = self.uber_or_family
+        res['use_subscription'] = self.use_subscription
+        res['subscription_date'] = self.subscription_date
+        res['discontinued'] = self.discontinued
+        res['discontinued_reason_ids'] = self.discontinued_reason_ids.ids
+        res['social_follower'] = self.social_follower
+        res['social_media_ids'] = self.social_media_ids.ids
+        res['recommended_products_and_services'] = self.recommended_products_and_services
+        return res
+
+    def handle_partner_assignation(self, action='create', partner_id=False):
+        """ Handle partner assignation during a lead conversion.
+            if action is 'create', create new partner with contact and assign lead to new partner_id.
+            otherwise assign lead to the specified partner_id
+
+            :param list ids: leads/opportunities ids to process
+            :param string action: what has to be done regarding partners (create it, assign an existing one, or nothing)
+            :param int partner_id: partner to assign if any
+            :return dict: dictionary organized as followed: {lead_id: partner_assigned_id}
+        """
+        partner_ids = {}
+        for lead in self:
+            if partner_id:
+                lead.partner_id = partner_id
+            if lead.partner_id:
+                partner_ids[lead.id] = lead.partner_id.id
+                continue
+            if action == 'create':
+                partner = lead._create_lead_partner()
+                partner_id = partner.id
+
+                # Prepare one2many fields
+                degree_lines = []
+                medical_issues = []
+                for line in self.degree_ids:
+                    degree_lines.append({
+                        'degree_id': line.degree_id.id,
+                        'institutions_id': line.institutions_id.id,
+                        'date': line.date,
+                        'partner_id': partner.id,
+                    })
+                for line in self.medical_issues_ids:
+                    medical_issues.append({
+                        'type': line.type,
+                        'date': line.date,
+                        'more_info': line.more_info,
+                        'partner_id': partner.id,
+                    })
+                partner.write({'degree_ids': [(0, 0, line) for line in degree_lines]})
+                partner.write({'medical_issues_ids': [(0, 0, line) for line in medical_issues]})
+                # END
+                partner.team_id = lead.team_id
+            partner_ids[lead.id] = partner_id
+        return partner_ids
