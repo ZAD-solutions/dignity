@@ -185,9 +185,6 @@ class ResPartnerInherit(models.Model):
                 raise UserError('Another Customer/Vendor already has this Mobile (%s)' % self.mobile)
             # if self.mobile and not self.mobile.isdigit():
             #     raise UserError('The Mobile (%s) Is Not Valid Format' % self.mobile)
-            if self.country_id.id == 65:
-                if self.mobile and not re.match("^\d{11}$", self.mobile):
-                    raise UserError('Please enter 11 digits for the mobile number (%s).' % self.mobile)
-
-    # Override these fields to ignore server core addons versions conflicts
-    # stage_id = fields.Many2one(comodel_name='crm.stage')
+            # if self.country_id.id == 65:
+                # if self.mobile and not re.match("^\d{11}$", self.mobile):
+                #     raise UserError('Please enter 11 digits for the mobile number (%s).' % self.mobile)
