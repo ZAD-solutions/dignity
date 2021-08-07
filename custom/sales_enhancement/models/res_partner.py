@@ -36,7 +36,7 @@ class ResPartnerInherit(models.Model):
     children_no = fields.Integer(string='No. of Children',)
     currency_id = fields.Many2one('res.currency', string='Currency',
                                   default=lambda self: self.env.company.currency_id)
-    household_income = fields.Monetary(string='Household Income', currency_field="currency_id", )
+    # household_income = fields.Monetary(string='Household Income', currency_field="currency_id", )
     degree_ids = fields.One2many(comodel_name='res.partner.degree', inverse_name='partner_id', )
     is_gezira_member = fields.Selection([('yes', 'Yes'), ('no', 'No')],
                                         string='Are you a Member Of Gezira Club ?', )
@@ -73,8 +73,8 @@ class ResPartnerInherit(models.Model):
                                            ('non_salty', 'Non Salty')],
                                           string='Salty or Non Salty', )
     water_per_day = fields.Float('How much water do you drink per day')
-    drinking_alcohol = fields.Selection([('yes', 'Yes'), ('no', 'No')],
-                                        string='Drinking Alcohol ?', )
+    # drinking_alcohol = fields.Selection([('yes', 'Yes'), ('no', 'No')],
+    #                                     string='Drinking Alcohol ?', )
     favourite_breakfast = fields.Char('Favourite Breakfast')
     favourite_lunch = fields.Char('Favourite Lunch')
     favourite_dinner = fields.Char('Favourite Dinner')

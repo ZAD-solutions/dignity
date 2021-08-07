@@ -37,7 +37,7 @@ class CRMLeadInherit(models.Model):
     children_no = fields.Integer(string='No. of Children', )
     currency_id = fields.Many2one('res.currency', string='Currency',
                                   default=lambda self: self.env.company.currency_id)
-    household_income = fields.Monetary(string='Household Income', currency_field="currency_id", )
+    # household_income = fields.Monetary(string='Household Income', currency_field="currency_id", )
     degree_ids = fields.One2many(comodel_name='res.partner.degree', inverse_name='lead_id', )
     is_gezira_member = fields.Selection([('yes', 'Yes'), ('no', 'No')],
                                         string='Are you a Member Of Gezira Club ?', )
@@ -70,8 +70,8 @@ class CRMLeadInherit(models.Model):
                                            ('non_salty', 'Non Salty')],
                                           string='Salty or Non Salty', )
     water_per_day = fields.Float('How much water do you drink per day')
-    drinking_alcohol = fields.Selection([('yes', 'Yes'), ('no', 'No')],
-                                        string='Drinking Alcohol ?', )
+    # drinking_alcohol = fields.Selection([('yes', 'Yes'), ('no', 'No')],
+    #                                     string='Drinking Alcohol ?', )
     favourite_breakfast = fields.Char('Favourite Breakfast')
     favourite_lunch = fields.Char('Favourite Lunch')
     favourite_dinner = fields.Char('Favourite Dinner')
@@ -182,7 +182,7 @@ class CRMLeadInherit(models.Model):
         res['marital_status'] = self.marital_status
         res['children_no'] = self.children_no
         res['currency_id'] = self.currency_id
-        res['household_income'] = self.household_income
+        # res['household_income'] = self.household_income
         res['is_gezira_member'] = self.is_gezira_member
         res['is_heliopolis_member'] = self.is_heliopolis_member
         res['favourite_pastime'] = self.favourite_pastime
@@ -203,7 +203,7 @@ class CRMLeadInherit(models.Model):
         res['meals_per_day'] = self.meals_per_day
         res['salty_or_non_salty'] = self.salty_or_non_salty
         res['water_per_day'] = self.water_per_day
-        res['drinking_alcohol'] = self.drinking_alcohol
+        # res['drinking_alcohol'] = self.drinking_alcohol
         res['favourite_breakfast'] = self.favourite_breakfast
         res['favourite_lunch'] = self.favourite_lunch
         res['favourite_dinner'] = self.favourite_dinner
