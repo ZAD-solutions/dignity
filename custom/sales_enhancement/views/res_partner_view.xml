@@ -13,8 +13,6 @@
                 <page name="personal_info" string="Personal Info">
                     <group name="general_section" string="General Section">
                         <group>
-                            <field name="gender" widget="selection"/>
-                            <field name="age_group_id"/>
                             <field name="birthdate"/>
                             <field name="age" attrs="{'invisible': [('birthdate', '=', False)]}"/>
                         </group>
