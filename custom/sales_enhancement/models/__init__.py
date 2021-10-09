@@ -11,4 +11,19 @@ from . import pastime
 from . import preferred_destination
 from . import res_partner
 from . import crm_lead
+from . import enjoy_most
+from . import favourite_format_of_art
+from . import favourite_music
+from . import favourite_genre_of_movies
+from . import favourite_cuisines
+from . import favourite_sport_to_engage
+from . import favourite_sport_to_watch
+from . import board_games
+from . import football_club
+from . import good_mode_dinning
+from . import favourite_local_destination
+from . import preffered_season
+from . import like_to_dine
+from . import preferred_chocolate
+from . import favourite_source_of_protein
 # from . import sale_order
