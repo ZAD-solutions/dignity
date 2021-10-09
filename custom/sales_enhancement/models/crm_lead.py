@@ -467,3 +467,154 @@ class CRMLeadInherit(models.Model):
         new_partner_id.write({'medical_issues_ids': [(0, 0, line) for line in medical_issues]})
         # END
         return new_partner_id
+
+    @api.onchange('partner_id')
+    def onchange_partner_id(self):
+        for record in self:
+            if record.partner_id:
+                record.gender = record.partner_id.gender
+                record.age_group_id = record.partner_id.age_group_id.id if record.partner_id.age_group_id else False
+                record.birthdate = record.partner_id.birthdate
+                record.age = record.partner_id.age
+                record.marital_status = record.partner_id.marital_status
+                record.children_no = record.partner_id.children_no
+                record.currency_id = record.partner_id.currency_id.id if record.partner_id.currency_id else False
+                record.is_gezira_member = record.partner_id.is_gezira_member
+                record.is_heliopolis_member = record.partner_id.is_heliopolis_member
+                record.favourite_pastime = record.partner_id.favourite_pastime
+                record.favourite_pastime_ids = record.partner_id.favourite_pastime_ids.ids
+                record.campaign_id = record.partner_id.campaign_id.id if record.partner_id.campaign_id else False
+                record.source_id = record.partner_id.source_id.id if record.partner_id.source_id else False
+                record.medium_id = record.partner_id.medium_id.id if record.partner_id.medium_id else False
+                record.referred = record.partner_id.referred
+                record.need_assist = record.partner_id.need_assist
+                record.socialize_member = record.partner_id.socialize_member
+                record.on_diet = record.partner_id.on_diet
+                record.diet_type = record.partner_id.diet_type
+                record.any_restrictions = record.partner_id.any_restrictions
+                record.more_info = record.partner_id.more_info
+                record.fruits_or_sweets = record.partner_id.fruits_or_sweets
+                record.weight_goals = record.partner_id.weight_goals
+                record.homemade_or_fast_food = record.partner_id.homemade_or_fast_food
+                record.meals_per_day = record.partner_id.meals_per_day
+                record.salty_or_non_salty = record.partner_id.salty_or_non_salty
+                record.water_per_day = record.partner_id.water_per_day
+                record.favourite_breakfast = record.partner_id.favourite_breakfast
+                record.favourite_lunch = record.partner_id.favourite_lunch
+                record.favourite_dinner = record.partner_id.favourite_dinner
+                record.favourite_source_of_protein = record.partner_id.favourite_source_of_protein.ids
+                record.vitamin_d = record.partner_id.vitamin_d
+                record.time_in_sun = record.partner_id.time_in_sun
+                record.healthy_level = record.partner_id.healthy_level
+                record.missing_from_diet = record.partner_id.missing_from_diet
+                record.chronic_diseases = record.partner_id.chronic_diseases
+                record.chronic_diseases_ids = record.partner_id.chronic_diseases_ids.ids
+                record.medication = record.partner_id.medication
+                record.medical_issues = record.partner_id.medical_issues
+                record.injuries = record.partner_id.injuries
+                record.serious_or_permanent_injuries = record.partner_id.serious_or_permanent_injuries
+                record.activity_level = record.partner_id.activity_level
+                record.disabilities_or_handicaps = record.partner_id.disabilities_or_handicaps
+                record.disability_type_ids = record.partner_id.disability_type_ids.ids
+                record.any_past_emotional_trauma = record.partner_id.any_past_emotional_trauma
+                record.emotional_trauma = record.partner_id.emotional_trauma
+                record.favourite_actor = record.partner_id.favourite_actor
+                record.favourite_actress = record.partner_id.favourite_actress
+                record.favourite_egyptian_movie = record.partner_id.favourite_egyptian_movie
+                record.favourite_tv_show = record.partner_id.favourite_tv_show
+                record.favourite_international_movie = record.partner_id.favourite_international_movie
+                record.favourite_musician = record.partner_id.favourite_musician
+                record.do_you_read = record.partner_id.do_you_read
+                record.favourite_book = record.partner_id.favourite_book
+                record.favourite_writer = record.partner_id.favourite_writer
+                record.do_you_play_music = record.partner_id.do_you_play_music
+                record.do_you_play_sports = record.partner_id.do_you_play_sports
+                record.favourite_board_game = record.partner_id.favourite_board_game
+                record.team_type = record.partner_id.team_type
+                record.preferred_holidays = record.partner_id.preferred_holidays
+                record.preferred_destination = record.partner_id.preferred_destination
+                record.other_destination = record.partner_id.other_destination
+                record.own_or_rent = record.partner_id.own_or_rent
+                record.summer_or_winter = record.partner_id.summer_or_winter
+                record.remote_destination = record.partner_id.remote_destination
+                record.go_out_cairo = record.partner_id.go_out_cairo
+                record.own_car = record.partner_id.own_car
+                record.do_you_drive = record.partner_id.do_you_drive
+                record.do_you_have_driver = record.partner_id.do_you_have_driver
+                record.driver_type = record.partner_id.driver_type
+                record.uber_or_family = record.partner_id.uber_or_family
+                record.use_subscription = record.partner_id.use_subscription
+                record.subscription_date = record.partner_id.subscription_date
+                record.discontinued = record.partner_id.discontinued
+                record.discontinued_reason_ids = record.partner_id.discontinued_reason_ids.ids
+                record.social_follower = record.partner_id.social_follower
+                record.social_media_ids = record.partner_id.social_media_ids.ids
+                record.recommended_products_and_services = record.partner_id.recommended_products_and_services
+                record.what_do_you_enjoy_the_most = record.partner_id.what_do_you_enjoy_the_most.ids
+                record.favourite_format_of_art = record.partner_id.favourite_format_of_art.ids
+                record.type_of_musician = record.partner_id.type_of_musician
+                record.favourite_music = record.partner_id.favourite_music.ids
+                record.which_music_will_elevate_your_mode = record.partner_id.which_music_will_elevate_your_mode
+                record.favourite_genre_of_movies = record.partner_id.favourite_genre_of_movies.ids
+                record.what_sports_club_are_you_member_in = record.partner_id.what_sports_club_are_you_member_in
+                record.favourite_cuisines = record.partner_id.favourite_cuisines.ids
+                record.favourite_sport_to_engage = record.partner_id.favourite_sport_to_engage.ids
+                record.favourite_sport_to_watch = record.partner_id.favourite_sport_to_watch.ids
+                record.board_games = record.partner_id.board_games.ids
+                record.football_club = record.partner_id.football_club.ids
+                record.team_type = record.partner_id.team_type
+                record.favourite_local_destination = record.partner_id.favourite_local_destination.ids
+                record.other_destination_info = record.partner_id.other_destination_info
+                record.city_or_beach = record.partner_id.city_or_beach
+                record.preferred_season = record.partner_id.preferred_season.ids
+                record.sun_or_shade = record.partner_id.sun_or_shade
+                record.arrangement_of_your_dream_vacation = record.partner_id.arrangement_of_your_dream_vacation
+                record.like_to_dine = record.partner_id.like_to_dine.ids
+                record.shopping_or_delivery = record.partner_id.shopping_or_delivery
+                record.preferred_chocolate = record.partner_id.preferred_chocolate.ids
+                record.love_pets = record.partner_id.love_pets
+                record.pet_info = record.partner_id.pet_info
+                record.grow_plants = record.partner_id.grow_plants
+                record.enjoy_reading = record.partner_id.enjoy_reading
+                record.which_book_category = record.partner_id.which_book_category
+                record.favourite_color = record.partner_id.favourite_color
+                record.make_up_do_you_use = record.partner_id.make_up_do_you_use
+                record.might_annoy_you = record.partner_id.might_annoy_you
+                record.bad_mode_while_eating = record.partner_id.bad_mode_while_eating
+                record.looking_for_restaurant_menu = record.partner_id.looking_for_restaurant_menu
+                record.annoying_in_hotel_rooms = record.partner_id.annoying_in_hotel_rooms
+                record.compound_community_space = record.partner_id.compound_community_space
+                record.hate_from_start_to_arrive = record.partner_id.hate_from_start_to_arrive
+                record.make_your_life_easier = record.partner_id.make_your_life_easier
+                record.living_room_more_convenient = record.partner_id.living_room_more_convenient
+                record.kitchen_more_convenient = record.partner_id.kitchen_more_convenient
+                record.surroundings = record.partner_id.surroundings
+                record.going_shopping_in_mall = record.partner_id.going_shopping_in_mall
+                record.invite_people_to_home_dinner = record.partner_id.invite_people_to_home_dinner
+                record.visiting_friend = record.partner_id.visiting_friend
+                record.annoying_in_clothing_store = record.partner_id.annoying_in_clothing_store
+                record.fitting_rooms_in_shops = record.partner_id.fitting_rooms_in_shops
+                record.is_other_local_destination = record.partner_id.is_other_local_destination
+
+                degree_lines = []
+                medical_issues = []
+                record.degree_ids = False
+                record.medical_issues_ids = False
+                for line in record.partner_id.degree_ids:
+                    degree_lines.append({
+                        'degree_id': line.degree_id.id,
+                        'institutions_id': line.institutions_id.id,
+                        'date': line.date,
+                        'partner_id': line.partner_id.id,
+                        # 'lead_id': self.id,
+                    })
+                for line in record.partner_id.medical_issues_ids:
+                    medical_issues.append({
+                        'type': line.type,
+                        'date': line.date,
+                        'more_info': line.more_info,
+                        'partner_id': line.partner_id.id,
+                        # 'lead_id': self.id,
+                    })
+                record.degree_ids = [(0, 0, line) for line in degree_lines]
+                record.medical_issues_ids = [(0, 0, line) for line in medical_issues]
