@@ -18,8 +18,6 @@
                             <field name="marital_status"/>
                             <field name="children_no"
                                    attrs="{'invisible': [('marital_status', 'not in', ('married', 'divorced', 'separated'))]}"/>
-                            <field name="currency_id" invisible="1"/>
-                            <!--                            <field name="household_income" widget='monetary'/>-->
                         </group>
                         <field name="degree_ids">
                             <tree editable="bottom">
@@ -218,6 +216,25 @@
                             <field name="favourite_color"/>
                             <field name="make_up_do_you_use"/>
                         </group>
+                    </group>
+                </page>
+                <page name="things_to_change" string="Things to Change">
+                    <group>
+                        <field name="might_annoy_you"/>
+                        <field name="bad_mode_while_eating"/>
+                        <field name="looking_for_restaurant_menu"/>
+                        <field name="annoying_in_hotel_rooms"/>
+                        <field name="compound_community_space"/>
+                        <field name="hate_from_start_to_arrive"/>
+                        <field name="make_your_life_easier"/>
+                        <field name="living_room_more_convenient"/>
+                        <field name="kitchen_more_convenient"/>
+                        <field name="surroundings"/>
+                        <field name="going_shopping_in_mall"/>
+                        <field name="invite_people_to_home_dinner"/>
+                        <field name="visiting_friend"/>
+                        <field name="annoying_in_clothing_store"/>
+                        <field name="fitting_rooms_in_shops" widget="radio"/>
                     </group>
                 </page>
             </xpath>
