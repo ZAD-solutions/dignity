@@ -3,7 +3,6 @@ from odoo import models, fields, api, _
 
 class MedicalIssues(models.Model):
     _name = 'medical.issues'
-    _inherit = ['mail.thread', 'mail.activity.mixin']
     _rec_name = 'type'
     _description = 'Medical Issues'
 

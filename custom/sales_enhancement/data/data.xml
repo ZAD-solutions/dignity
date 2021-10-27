@@ -5,10 +5,10 @@
         <record id="chronic_diseases_1" model="chronic.diseases">
             <field name="name">Diabetes</field>
         </record>
-         <record id="chronic_diseases_2" model="chronic.diseases">
+        <record id="chronic_diseases_2" model="chronic.diseases">
             <field name="name">Hypertension</field>
         </record>
-         <record id="chronic_diseases_3" model="chronic.diseases">
+        <record id="chronic_diseases_3" model="chronic.diseases">
             <field name="name">Neurological</field>
         </record>
 
@@ -16,7 +16,7 @@
         <record id="social_media_1" model="social.media">
             <field name="name">Facebook</field>
         </record>
-         <record id="social_media_2" model="social.media">
+        <record id="social_media_2" model="social.media">
             <field name="name">Twitter</field>
         </record>
         <record id="social_media_3" model="social.media">
@@ -38,6 +38,219 @@
         </record>
         <record id="preferred_destination_5" model="preferred.destination">
             <field name="name">Other</field>
+        </record>
+
+        <!-- Enjoy the most Data -->
+        <record id="enjoy_most_1" model="enjoy.most">
+            <field name="name">Concert</field>
+        </record>
+        <record id="enjoy_most_2" model="enjoy.most">
+            <field name="name">Cinema</field>
+        </record>
+        <record id="enjoy_most_3" model="enjoy.most">
+            <field name="name">Theater</field>
+        </record>
+
+        <!-- Enjoy the most Data -->
+        <record id="favourite_format_of_art_1" model="favourite.format.of.art">
+            <field name="name">Painting</field>
+        </record>
+        <record id="favourite_format_of_art_2" model="favourite.format.of.art">
+            <field name="name">Literature</field>
+        </record>
+        <record id="favourite_format_of_art_3" model="favourite.format.of.art">
+            <field name="name">Film</field>
+        </record>
+        <record id="favourite_format_of_art_4" model="favourite.format.of.art">
+            <field name="name">Fashion</field>
+        </record>
+
+        <!-- Favourite Music Data -->
+        <record id="favourite_music_1" model="favourite.music">
+            <field name="name">Classic Egyptian</field>
+        </record>
+        <record id="favourite_music_2" model="favourite.music">
+            <field name="name">Jazz</field>
+        </record>
+        <record id="favourite_music_3" model="favourite.music">
+            <field name="name">Classic Pop</field>
+        </record>
+        <record id="favourite_music_4" model="favourite.music">
+            <field name="name">Blues</field>
+        </record>
+
+        <!-- Favourite Music Data -->
+        <record id="favourite_genre_of_movies_1" model="favourite.genre.of.movies">
+            <field name="name">Drama</field>
+        </record>
+        <record id="favourite_genre_of_movies_2" model="favourite.genre.of.movies">
+            <field name="name">Comedy</field>
+        </record>
+        <record id="favourite_genre_of_movies_3" model="favourite.genre.of.movies">
+            <field name="name">Fantasy</field>
+        </record>
+        <record id="favourite_genre_of_movies_4" model="favourite.genre.of.movies">
+            <field name="name">Horror</field>
+        </record>
+
+        <!-- Favourite Cuisines Data -->
+        <record id="favourite_cuisines_1" model="favourite.cuisines">
+            <field name="name">Egyptian</field>
+        </record>
+        <record id="favourite_cuisines_2" model="favourite.cuisines">
+            <field name="name">Lebanese</field>
+        </record>
+        <record id="favourite_cuisines_3" model="favourite.cuisines">
+            <field name="name">Italian</field>
+        </record>
+        <record id="favourite_cuisines_4" model="favourite.cuisines">
+            <field name="name">Thai</field>
+        </record>
+
+        <!-- Favourite Sport to Engage Data -->
+        <record id="favourite_sport_to_engage_1" model="favourite.sport.to.engage">
+            <field name="name">Swimming</field>
+        </record>
+        <record id="favourite_sport_to_engage_2" model="favourite.sport.to.engage">
+            <field name="name">Cycling</field>
+        </record>
+        <record id="favourite_sport_to_engage_3" model="favourite.sport.to.engage">
+            <field name="name">Walking</field>
+        </record>
+
+        <!-- Favourite Sport to Watch Data -->
+        <record id="favourite_sport_to_watch_1" model="favourite.sport.to.watch">
+            <field name="name">Football</field>
+        </record>
+        <record id="favourite_sport_to_watch_2" model="favourite.sport.to.watch">
+            <field name="name">Tennis</field>
+        </record>
+        <record id="favourite_sport_to_watch_3" model="favourite.sport.to.watch">
+            <field name="name">Golf</field>
+        </record>
+        <record id="favourite_sport_to_watch_4" model="favourite.sport.to.watch">
+            <field name="name">Basketball</field>
+        </record>
+
+        <!-- Board Games Data -->
+        <record id="board_games_1" model="board.games">
+            <field name="name">Chess</field>
+        </record>
+        <record id="board_games_2" model="board.games">
+            <field name="name">Tawla</field>
+        </record>
+        <record id="board_games_3" model="board.games">
+            <field name="name">Card Games</field>
+        </record>
+        <record id="board_games_4" model="board.games">
+            <field name="name">Monopoly</field>
+        </record>
+
+        <!-- Football Club Data -->
+        <record id="board_games_1" model="football.club">
+            <field name="name">Ahli</field>
+        </record>
+        <record id="board_games_2" model="football.club">
+            <field name="name">Zamalek</field>
+        </record>
+        <record id="board_games_3" model="football.club">
+            <field name="name">Real Madrid</field>
+        </record>
+        <record id="board_games_4" model="football.club">
+            <field name="name">Barcelona</field>
+        </record>
+
+        <!-- Good Mode Dinning Data -->
+        <record id="good_mode_dinning_1" model="good.mode.dinning">
+            <field name="name">Nile View</field>
+        </record>
+        <record id="good_mode_dinning_2" model="good.mode.dinning">
+            <field name="name">Sea View</field>
+        </record>
+        <record id="good_mode_dinning_3" model="good.mode.dinning">
+            <field name="name">Fine dining Restaurant / Pyramid View</field>
+        </record>
+        <record id="good_mode_dinning_4" model="good.mode.dinning">
+            <field name="name">Cozy Dine at home</field>
+        </record>
+
+        <!-- Favourite Local Destination Data -->
+        <record id="favourite_local_destination_1" model="favourite.local.destination">
+            <field name="name">Sa7el</field>
+        </record>
+        <record id="favourite_local_destination_2" model="favourite.local.destination">
+            <field name="name">Gouna</field>
+        </record>
+        <record id="favourite_local_destination_3" model="favourite.local.destination">
+            <field name="name">Soukhna</field>
+        </record>
+        <record id="favourite_local_destination_4" model="favourite.local.destination">
+            <field name="name">Red Sea</field>
+        </record>
+        <record id="favourite_local_destination_5" model="favourite.local.destination">
+            <field name="name">Luxor &amp; Aswan</field>
+        </record>
+        <record id="favourite_local_destination_6" model="favourite.local.destination">
+            <field name="name">Sinai</field>
+        </record>
+        <record id="favourite_local_destination_7" model="favourite.local.destination">
+            <field name="name">Other</field>
+        </record>
+
+        <!-- Preferred Season Data -->
+        <record id="preferred_season_1" model="preferred.season">
+            <field name="name">Summer</field>
+        </record>
+        <record id="preferred_season_2" model="preferred.season">
+            <field name="name">Winter</field>
+        </record>
+        <record id="preferred_season_3" model="preferred.season">
+            <field name="name">Autumn</field>
+        </record>
+        <record id="preferred_season_4" model="preferred.season">
+            <field name="name">Spring</field>
+        </record>
+
+        <!-- Like to Dine Data -->
+        <record id="like_to_dine_1" model="like.to.dine">
+            <field name="name">Cozy at home</field>
+        </record>
+        <record id="like_to_dine_2" model="like.to.dine">
+            <field name="name">Nile view</field>
+        </record>
+        <record id="like_to_dine_3" model="like.to.dine">
+            <field name="name">Casual dining</field>
+        </record>
+        <record id="like_to_dine_4" model="like.to.dine">
+            <field name="name">Family style</field>
+        </record>
+
+        <!-- Preferred Chocolate Data -->
+        <record id="preferred_chocolate_1" model="preferred.chocolate">
+            <field name="name">Light</field>
+        </record>
+        <record id="preferred_chocolate_2" model="preferred.chocolate">
+            <field name="name">Dark</field>
+        </record>
+        <record id="preferred_chocolate_3" model="preferred.chocolate">
+            <field name="name">White</field>
+        </record>
+        <record id="preferred_chocolate_4" model="preferred.chocolate">
+            <field name="name">With Nuts</field>
+        </record>
+
+        <!-- Favourite Source of Protein Data -->
+        <record id="favourite_source_of_protein_1" model="favourite.source.of.protein">
+            <field name="name">Lean Meats</field>
+        </record>
+        <record id="favourite_source_of_protein_2" model="favourite.source.of.protein">
+            <field name="name">Poultry</field>
+        </record>
+        <record id="favourite_source_of_protein_3" model="favourite.source.of.protein">
+            <field name="name">Seafood</field>
+        </record>
+        <record id="favourite_source_of_protein_4" model="favourite.source.of.protein">
+            <field name="name">Dairy Products</field>
         </record>
     </data>
 </odoo>

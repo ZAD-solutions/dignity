@@ -5,20 +5,19 @@
         <field name="model">crm.lead</field>
         <field name="inherit_id" ref="crm.crm_lead_view_form"/>
         <field name="arch" type="xml">
+            <xpath expr="//field[@name='team_id']" position="after">
+                <field name="gender" widget="selection"/>
+                <field name="age_group_id"/>
+                <field name="birthdate"/>
+                <field name="age" attrs="{'invisible': [('birthdate', '=', False)]}"/>
+            </xpath>
             <xpath expr="//notebook" position="inside">
                 <page name="personal_info" string="Personal Info">
                     <group name="general_section" string="General Section">
                         <group>
-                            <field name="gender" widget="selection"/>
-                            <field name="age_group_id"/>
-                            <field name="birthdate"/>
-                            <field name="age" attrs="{'invisible': [('birthdate', '=', False)]}"/>
-                        </group>
-                        <group>
                             <field name="marital_status"/>
                             <field name="children_no"
                                    attrs="{'invisible': [('marital_status', 'not in', ('married', 'divorced', 'separated'))]}"/>
-                            <field name="household_income"/>
                         </group>
                         <field name="degree_ids">
                             <tree editable="bottom">
@@ -28,30 +27,30 @@
                             </tree>
                         </field>
                     </group>
-                    <group name="more_info_section" string="More Info Section">
-                        <group>
-                            <field name="is_gezira_member" widget="radio"/>
-                            <field name="is_heliopolis_member" widget="radio"/>
-                            <field name="favourite_pastime_ids" widget="many2many_tags"/>
-                        </group>
-                        <group>
-                            <field name="need_assist" widget="radio"/>
-                            <field name="socialize_member" widget="radio"/>
-                        </group>
-                    </group>
+<!--                    <group name="more_info_section" string="More Info Section">-->
+<!--                        <group>-->
+<!--                            <field name="is_gezira_member" widget="radio"/>-->
+<!--                            <field name="is_heliopolis_member" widget="radio"/>-->
+<!--                            <field name="favourite_pastime_ids" widget="many2many_tags"/>-->
+<!--                        </group>-->
+<!--                        <group>-->
+<!--                            <field name="need_assist" widget="radio"/>-->
+<!--                            <field name="socialize_member" widget="radio"/>-->
+<!--                        </group>-->
+<!--                    </group>-->
                 </page>
                 <page name="nutrition_info" string="Nutrition Info">
                     <group>
                         <group>
-                            <field name="on_diet" widget="radio"/>
-                            <field name="diet_type"
-                                   attrs="{'invisible': [('on_diet', '!=', 'yes')], 'required': [('on_diet', '=', 'yes')]}"/>
-                            <field name="any_restrictions" widget="radio"
-                                   attrs="{'invisible': [('on_diet', '!=', 'yes')]}"/>
-                            <field name="more_info"
-                                   attrs="{'invisible': [('any_restrictions', '!=', 'yes')], 'required': [('any_restrictions', '=', 'yes')]}"/>
+<!--                            <field name="on_diet" widget="radio"/>-->
+<!--                            <field name="diet_type"-->
+<!--                                   attrs="{'invisible': [('on_diet', '!=', 'yes')], 'required': [('on_diet', '=', 'yes')]}"/>-->
+<!--                            <field name="any_restrictions" widget="radio"-->
+<!--                                   attrs="{'invisible': [('on_diet', '!=', 'yes')]}"/>-->
+<!--                            <field name="more_info"-->
+<!--                                   attrs="{'invisible': [('any_restrictions', '!=', 'yes')], 'required': [('any_restrictions', '=', 'yes')]}"/>-->
                             <field name="fruits_or_sweets" widget="radio"/>
-                            <field name="weight_goals"/>
+<!--                            <field name="weight_goals"/>-->
                             <field name="homemade_or_fast_food" widget="radio"/>
                             <field name="meals_per_day"/>
                             <field name="salty_or_non_salty" class="oe_inline" widget="radio"/>
@@ -62,15 +61,15 @@
                                 <field name="water_per_day" class="oe_inline"/>
                                 <span class="oe_grey p-2">Liter/Day</span>
                             </div>
-                            <field name="drinking_alcohol" widget="radio"/>
+                            <!--                            <field name="drinking_alcohol" widget="radio"/>-->
                             <field name="favourite_breakfast"/>
                             <field name="favourite_lunch"/>
                             <field name="favourite_dinner"/>
-                            <field name="favourite_source_of_protein"/>
-                            <field name="vitamin_d" widget="radio"/>
-                            <field name="time_in_sun" widget="radio"/>
-                            <field name="healthy_level"/>
-                            <field name="missing_from_diet"/>
+                            <field name="favourite_source_of_protein" widget="many2many_tags"/>
+<!--                            <field name="vitamin_d" widget="radio"/>-->
+<!--                            <field name="time_in_sun" widget="radio"/>-->
+<!--                            <field name="healthy_level"/>-->
+<!--                            <field name="missing_from_diet"/>-->
                         </group>
                     </group>
                 </page>
@@ -106,42 +105,42 @@
                         </field>
                     </group>
                 </page>
-                <page name="entertainment_travel_info" string="Entertainment/Travel Info">
-                    <group name="entertainment_info" string="Entertainment Info">
-                        <group>
-                            <field name="favourite_actor"/>
-                            <field name="favourite_actress"/>
-                            <field name="favourite_egyptian_movie"/>
-                            <field name="favourite_tv_show"/>
-                            <field name="favourite_international_movie"/>
-                            <field name="favourite_musician"/>
-                            <field name="favourite_board_game"/>
-                        </group>
-                        <group>
-                            <field name="do_you_read" widget="radio"/>
-                            <field name="favourite_book" attrs="{'invisible': [('do_you_read', '!=', 'yes')]}"/>
-                            <field name="favourite_writer" attrs="{'invisible': [('do_you_read', '!=', 'yes')]}"/>
-                            <field name="do_you_play_music" widget="radio"/>
-                            <field name="do_you_play_sports" widget="radio"/>
-                            <field name="team_type" widget="radio"/>
-                        </group>
-                    </group>
-                    <group name="travel_info" string="Travel Info">
-                        <group>
-                            <field name="preferred_holidays" widget="radio"/>
-                            <field name="preferred_destination" widget="many2many_tags" options="{'no_create': True}"
-                                   attrs="{'invisible': [('preferred_holidays', '!=', 'traveling')]}"/>
-                            <field name="other_destination"
-                                   attrs="{'invisible': [('preferred_destination', '!=', 'other')]}"/>
-                        </group>
-                        <group>
-                            <field name="own_or_rent" widget="radio"/>
-                            <field name="summer_or_winter" widget="radio"/>
-                            <field name="remote_destination" widget="radio"/>
-                            <field name="go_out_cairo"/>
-                        </group>
-                    </group>
-                    <group name="transportation_info" string="Transportation Info">
+                <page name="transportation_info1" string="Transportation Info" >
+<!--                    <group name="entertainment_info" string="Entertainment Info">-->
+<!--                        <group>-->
+<!--&lt;!&ndash;                            <field name="favourite_actor"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                            <field name="favourite_actress"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                            <field name="favourite_egyptian_movie"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                            <field name="favourite_tv_show"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                            <field name="favourite_international_movie"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                            <field name="favourite_musician"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                            <field name="favourite_board_game"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                            <field name="do_you_read" widget="radio"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                            <field name="favourite_book" attrs="{'invisible': [('do_you_read', '!=', 'yes')]}"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                            <field name="favourite_writer" attrs="{'invisible': [('do_you_read', '!=', 'yes')]}"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                            <field name="do_you_play_music" widget="radio"/>&ndash;&gt;-->
+<!--                        </group>-->
+<!--                        <group>-->
+<!--&lt;!&ndash;                            <field name="do_you_play_sports" widget="radio"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                            <field name="team_type" widget="radio"/>&ndash;&gt;-->
+<!--                        </group>-->
+<!--                    </group>-->
+<!--                    <group name="travel_info" string="Travel Info">-->
+<!--                        <group>-->
+<!--                            <field name="preferred_holidays" widget="radio"/>-->
+<!--                            <field name="preferred_destination" widget="many2many_tags" options="{'no_create': True}"-->
+<!--                                   attrs="{'invisible': [('preferred_holidays', '!=', 'traveling')]}"/>-->
+<!--                            <field name="other_destination"-->
+<!--                                   attrs="{'invisible': [('preferred_destination', '!=', 'other')]}"/>-->
+<!--                        </group>-->
+<!--                        <group>-->
+<!--                            <field name="own_or_rent" widget="radio"/>-->
+<!--                            <field name="summer_or_winter" widget="radio"/>-->
+<!--                            <field name="remote_destination" widget="radio"/>-->
+<!--                            <field name="go_out_cairo"/>-->
+<!--                        </group>-->
+<!--                    </group>-->
+                    <group name="transportation_info">
                         <group>
                             <field name="own_car" widget="radio"/>
                             <field name="do_you_drive" widget="radio"
@@ -166,6 +165,76 @@
                                attrs="{'invisible': [('discontinued', '!=', 'yes')], 'required': [('discontinued', '=', 'yes')]}"/>
                         <field name="social_follower" widget="radio"/>
                         <field name="recommended_products_and_services"/>
+                    </group>
+                </page>
+                <page name="favourites" string="Favourites">
+                    <group string="Art">
+                        <group>
+                            <field name="what_do_you_enjoy_the_most" widget="many2many_tags"/>
+                            <field name="favourite_format_of_art" widget="many2many_tags"/>
+                            <field name="type_of_musician" widget="radio"/>
+                            <field name="favourite_music" widget="many2many_tags"/>
+                            <field name="which_music_will_elevate_your_mode"/>
+                            <field name="favourite_genre_of_movies" widget="many2many_tags"/>
+                        </group>
+                    </group>
+                    <group string="Sport">
+                        <group>
+                            <field name="what_sports_club_are_you_member_in"/>
+                            <field name="favourite_cuisines" widget="many2many_tags"/>
+                            <field name="favourite_sport_to_engage" widget="many2many_tags"/>
+                            <field name="favourite_sport_to_watch" widget="many2many_tags"/>
+                            <field name="board_games" widget="many2many_tags"/>
+                            <field name="football_club" widget="many2many_tags"/>
+                            <field name="team_type" widget="radio"/>
+                        </group>
+                    </group>
+                    <group string="Travel">
+                        <group>
+                            <field name="good_mode_while_dinning" widget="many2many_tags"/>
+                            <field name="favourite_local_destination" widget="many2many_tags"/>
+                            <field name="is_other_local_destination" invisible="1"/>
+                            <field name="other_destination_info" attrs="{'invisible': [('is_other_local_destination', '=', False)]}"/>
+                            <field name="city_or_beach" widget="radio"/>
+                            <field name="preferred_season" widget="many2many_tags"/>
+                            <field name="sun_or_shade" widget="radio"/>
+                            <field name="arrangement_of_your_dream_vacation"/>
+                            <field name="like_to_dine" widget="many2many_tags"/>
+                        </group>
+                    </group>
+                    <group string="Other">
+                        <group>
+                            <field name="shopping_or_delivery" widget="radio"/>
+                            <field name="preferred_chocolate" widget="many2many_tags"/>
+                            <field name="love_pets" widget="radio"/>
+                            <field name="pet_info" attrs="{'invisible': [('love_pets', '!=', 'yes')]}"/>
+                        </group>
+                        <group>
+                            <field name="grow_plants" widget="radio"/>
+                            <field name="enjoy_reading" widget="radio"/>
+                            <field name="which_book_category" attrs="{'invisible': [('enjoy_reading', '!=', 'yes')]}"/>
+                            <field name="favourite_color"/>
+                            <field name="make_up_do_you_use"/>
+                        </group>
+                    </group>
+                </page>
+                <page name="things_to_change" string="Things to Change">
+                    <group>
+                        <field name="might_annoy_you"/>
+                        <field name="bad_mode_while_eating"/>
+                        <field name="looking_for_restaurant_menu"/>
+                        <field name="annoying_in_hotel_rooms"/>
+                        <field name="compound_community_space"/>
+                        <field name="hate_from_start_to_arrive"/>
+                        <field name="make_your_life_easier"/>
+                        <field name="living_room_more_convenient"/>
+                        <field name="kitchen_more_convenient"/>
+                        <field name="surroundings"/>
+                        <field name="going_shopping_in_mall"/>
+                        <field name="invite_people_to_home_dinner"/>
+                        <field name="visiting_friend"/>
+                        <field name="annoying_in_clothing_store"/>
+                        <field name="fitting_rooms_in_shops" widget="radio"/>
                     </group>
                 </page>
             </xpath>
